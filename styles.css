@@ -1,0 +1,140 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.25rem;
+}
+
+/* Main Section */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#conversions-section {
+    text-align: center;
+    padding: 0 1rem;
+}
+
+#conversions-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #4CAF50;
+    font-size: 2rem;
+    border-bottom: 2px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.conversion-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.conversion-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 220px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.conversion-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.conversion-box h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conversion-box h3 i {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.conversion-box a {
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.conversion-box a:hover {
+    background-color: #45a049;
+}
+
+/* Footer */
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Converter page */
+.converter {
+    text-align: center;
+}
+
+.converter input[type="file"] {
+    margin: 1rem 0;
+}
+
+.converter button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.converter button:hover {
+    background-color: #45a049;
+}
+
+.converter #output {
+    margin-top: 1rem;
+}
