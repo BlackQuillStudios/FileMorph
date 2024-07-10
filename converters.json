@@ -1,0 +1,47 @@
+[
+    {
+        "category": "Document Conversions",
+        "converters": [
+            {
+                "name": "DOCX to PDF",
+                "icon": "fas fa-file-alt",
+                "code": "convertDOCXtoPDF(file);"
+            },
+            {
+                "name": "PDF to DOCX",
+                "icon": "fas fa-file-alt",
+                "code": "convertPDFtoDOCX(file);"
+            }
+        ]
+    },
+    {
+        "category": "Image Conversions",
+        "converters": [
+            {
+                "name": "PNG to JPG",
+                "icon": "fas fa-image",
+                "code": "convertPNGtoJPG(file);"
+            },
+            {
+                "name": "JPG to PNG",
+                "icon": "fas fa-image",
+                "code": "convertJPGtoPNG(file);"
+            }
+        ]
+    },
+    {
+        "category": "Audio Conversions",
+        "converters": [
+            {
+                "name": "MP3 to WAV",
+                "icon": "fas fa-music",
+                "code": "convertMP3toWAV(file);"
+            },
+            {
+                "name": "WAV to MP3",
+                "icon": "fas fa-music",
+                "code": "convertWAVtoMP3(file);"
+            }
+        ]
+    }
+]
