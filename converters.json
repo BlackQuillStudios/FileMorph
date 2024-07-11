@@ -5,16 +5,19 @@
             {
                 "name": "DOCX to PDF",
                 "icon": "fas fa-file-alt",
+                "allowedTypes": ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
                 "code": "function convert(file) { alert('DOCX to PDF conversion not implemented yet.'); }"
             },
             {
                 "name": "PDF to DOCX",
                 "icon": "fas fa-file-alt",
+                "allowedTypes": ["application/pdf"],
                 "code": "function convert(file) { alert('PDF to DOCX conversion not implemented yet.'); }"
             },
             {
                 "name": "PDF to TXT",
                 "icon": "fas fa-file-alt",
+                "allowedTypes": ["application/pdf"],
                 "code": "function convert(file) { alert('PDF to TXT conversion not implemented yet.'); }"
             }
         ]
@@ -25,12 +28,14 @@
             {
                 "name": "PNG to JPG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { convertPNGtoJPG(file); } function convertPNGtoJPG(file) { const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0); canvas.toBlob(function(blob) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = file.name.replace(/\\.png$/, '.jpg'); a.click(); URL.revokeObjectURL(url); }, 'image/jpeg'); }; img.src = event.target.result; }; reader.readAsDataURL(file); }"
+                "allowedTypes": ["image/png"],
+                "code": "function convert(file) { convertPNGtoJPG(file); } function convertPNGtoJPG(file) { const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0); canvas.toBlob(function(blob) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = file.name.replace(/\\.png$/, '.jpg'); document.body.appendChild(a); a.click(); URL.revokeObjectURL(url); }, 'image/jpeg'); }; img.src = event.target.result; }; reader.readAsDataURL(file); }"
             },
             {
                 "name": "JPG to PNG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { convertJPGtoPNG(file); } function convertJPGtoPNG(file) { const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0); canvas.toBlob(function(blob) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = file.name.replace(/\\.jpg$/, '.png'); a.click(); URL.revokeObjectURL(url); }, 'image/png'); }; img.src = event.target.result; }; reader.readAsDataURL(file); }"
+                "allowedTypes": ["image/jpeg", "image/jpg"],
+                "code": "function convert(file) { convertJPGtoPNG(file); } function convertJPGtoPNG(file) { const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0); canvas.toBlob(function(blob) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = file.name.replace(/\\.jpg$/, '.png'); document.body.appendChild(a); a.click(); URL.revokeObjectURL(url); }, 'image/png'); }; img.src = event.target.result; }; reader.readAsDataURL(file); }"
             }
         ]
     },
@@ -40,11 +45,13 @@
             {
                 "name": "MP3 to WAV",
                 "icon": "fas fa-music",
+                "allowedTypes": ["audio/mpeg"],
                 "code": "function convert(file) { alert('MP3 to WAV conversion not implemented yet.'); }"
             },
             {
                 "name": "WAV to MP3",
                 "icon": "fas fa-music",
+                "allowedTypes": ["audio/wav"],
                 "code": "function convert(file) { alert('WAV to MP3 conversion not implemented yet.'); }"
             }
         ]
