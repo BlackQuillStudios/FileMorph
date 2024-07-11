@@ -1,21 +1,22 @@
-// Load Converters from JSON and create links dynamically
-fetch('converters.json')
-    .then(response => response.json())
-    .then(data => {
-        const container = document.getElementById('converters-container');
-        data.forEach(category => {
-            const section = document.createElement('section');
-            section.innerHTML = `
-                <h3>${category.category}</h3>
-                <div class="conversion-container">
-                    ${category.converters.map(converter => `
-                        <div class="conversion-box">
-                            <h3><i class="${converter.icon}"></i> ${converter.name}</h3>
-                            <a href="converter.html?name=${encodeURIComponent(converter.name)}">Go to Converter</a>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            container.appendChild(section);
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('converters.json')
+        .then(response => response.json())
+        .then(data => {
+            const convertersContainer = document.getElementById('converters-container');
+            data.forEach(category => {
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.textContent = category.category;
+                convertersContainer.appendChild(categoryTitle);
+                category.converters.forEach(converter => {
+                    const converterDiv = document.createElement('div');
+                    converterDiv.className = 'converter-item';
+                    converterDiv.innerHTML = `
+                        <i class="${converter.icon}"></i>
+                        <span>${converter.name}</span>
+                        <a href="converter.html?name=${encodeURIComponent(converter.name)}">Go to Converter</a>
+                    `;
+                    convertersContainer.appendChild(converterDiv);
+                });
+            });
         });
-    });
+});
