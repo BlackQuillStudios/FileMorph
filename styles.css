@@ -96,3 +96,28 @@ footer {
     padding: 1.5rem;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.converter-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.converter-item i {
+    margin-right: 10px;
+}
+
+.converter-item a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.converter-item a:hover {
+    text-decoration: underline;
+}
