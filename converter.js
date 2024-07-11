@@ -18,11 +18,23 @@ fetch('converters.json')
         if (converter) {
             document.getElementById('converter-title').textContent = converter.name;
             document.getElementById('converter-name').textContent = `${converter.name} Converter`;
-
-            // Dynamically add the conversion function
             const script = document.createElement('script');
             script.textContent = converter.code;
             document.body.appendChild(script);
-
             window.convert = function() {
-                const fileInput = document.getElementById('file
+                const fileInput = document.getElementById('fileInput');
+                const output = document.getElementById('output');
+                if (fileInput.files.length === 0) {
+                    output.textContent = 'Please select a file to convert.';
+                    return;
+                }
+                const file = fileInput.files[0];
+                output.textContent = 'Converting...';
+                convert(file);  // Call the dynamically loaded conversion function
+                output.textContent = 'Conversion complete.';
+            };
+        } else {
+            document.getElementById('converter-title').textContent = 'Converter Not Found';
+            document.getElementById('converter-name').textContent = 'Converter Not Found';
+        }
+    });
