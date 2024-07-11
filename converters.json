@@ -5,12 +5,12 @@
             {
                 "name": "DOCX to PDF",
                 "icon": "fas fa-file-alt",
-                "code": "convertDOCXtoPDF(file);"
+                "code": "function convert(file) { console.log('Converting DOCX to PDF...', file); /* Actual conversion logic */ }"
             },
             {
                 "name": "PDF to DOCX",
                 "icon": "fas fa-file-alt",
-                "code": "convertPDFtoDOCX(file);"
+                "code": "function convert(file) { console.log('Converting PDF to DOCX...', file); /* Actual conversion logic */ }"
             }
         ]
     },
@@ -20,12 +20,12 @@
             {
                 "name": "PNG to JPG",
                 "icon": "fas fa-image",
-                "code": "convertPNGtoJPG(file);"
+                "code": "function convert(file) { console.log('Converting PNG to JPG...', file); /* Actual conversion logic */ }"
             },
             {
                 "name": "JPG to PNG",
                 "icon": "fas fa-image",
-                "code": "convertJPGtoPNG(file);"
+                "code": "function convert(file) { console.log('Converting JPG to PNG...', file); /* Actual conversion logic */ }"
             }
         ]
     },
@@ -35,12 +35,12 @@
             {
                 "name": "MP3 to WAV",
                 "icon": "fas fa-music",
-                "code": "convertMP3toWAV(file);"
+                "code": "function convert(file) { console.log('Converting MP3 to WAV...', file); /* Actual conversion logic */ }"
             },
             {
                 "name": "WAV to MP3",
                 "icon": "fas fa-music",
-                "code": "convertWAVtoMP3(file);"
+                "code": "function convert(file) { console.log('Converting WAV to MP3...', file); /* Actual conversion logic */ }"
             }
         ]
     }
