@@ -31,7 +31,7 @@ fetch('converters.json')
                 const file = fileInput.files[0];
                 output.textContent = 'Converting...';
                 convert(file);  // Call the dynamically loaded conversion function
-                output.textContent = 'Conversion complete.';
+                output.textContent = 'Conversion complete. Check your downloads.';
             };
         } else {
             document.getElementById('converter-title').textContent = 'Converter Not Found';
