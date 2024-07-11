@@ -5,12 +5,17 @@
             {
                 "name": "DOCX to PDF",
                 "icon": "fas fa-file-alt",
-                "code": "function convert(file) { console.log('Converting DOCX to PDF...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting DOCX to PDF...'); console.log('Converting DOCX to PDF...', file); }"
             },
             {
                 "name": "PDF to DOCX",
                 "icon": "fas fa-file-alt",
-                "code": "function convert(file) { console.log('Converting PDF to DOCX...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting PDF to DOCX...'); console.log('Converting PDF to DOCX...', file); }"
+            },
+            {
+                "name": "PDF to TXT",
+                "icon": "fas fa-file-alt",
+                "code": "function convert(file) { alert('Converting PDF to TXT...'); console.log('Converting PDF to TXT...', file); }"
             }
         ]
     },
@@ -20,12 +25,12 @@
             {
                 "name": "PNG to JPG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { console.log('Converting PNG to JPG...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting PNG to JPG...'); console.log('Converting PNG to JPG...', file); }"
             },
             {
                 "name": "JPG to PNG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { console.log('Converting JPG to PNG...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting JPG to PNG...'); console.log('Converting JPG to PNG...', file); }"
             }
         ]
     },
@@ -35,12 +40,12 @@
             {
                 "name": "MP3 to WAV",
                 "icon": "fas fa-music",
-                "code": "function convert(file) { console.log('Converting MP3 to WAV...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting MP3 to WAV...'); console.log('Converting MP3 to WAV...', file); }"
             },
             {
                 "name": "WAV to MP3",
                 "icon": "fas fa-music",
-                "code": "function convert(file) { console.log('Converting WAV to MP3...', file); /* Actual conversion logic */ }"
+                "code": "function convert(file) { alert('Converting WAV to MP3...'); console.log('Converting WAV to MP3...', file); }"
             }
         ]
     }
