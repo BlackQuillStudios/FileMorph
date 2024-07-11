@@ -31,6 +31,9 @@ header p {
 /* Main Section */
 main {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -115,10 +118,20 @@ footer {
 /* Converter page */
 .converter {
     text-align: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .converter input[type="file"] {
     margin: 1rem 0;
+    padding: 0.5rem;
+    width: calc(100% - 1rem);
+    box-sizing: border-box;
 }
 
 .converter button {
@@ -129,6 +142,7 @@ footer {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 1rem;
 }
 
 .converter button:hover {
@@ -137,4 +151,8 @@ footer {
 
 .converter #output {
     margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
