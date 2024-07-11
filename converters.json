@@ -5,17 +5,17 @@
             {
                 "name": "DOCX to PDF",
                 "icon": "fas fa-file-alt",
-                "code": "function convert(file) { alert('Converting DOCX to PDF...'); console.log('Converting DOCX to PDF...', file); }"
+                "code": "function convert(file) { convertDOCXtoPDF(file); } function convertDOCXtoPDF(file) { alert('Converting DOCX to PDF...'); console.log('Converting DOCX to PDF...', file); }"
             },
             {
                 "name": "PDF to DOCX",
                 "icon": "fas fa-file-alt",
-                "code": "function convert(file) { alert('Converting PDF to DOCX...'); console.log('Converting PDF to DOCX...', file); }"
+                "code": "function convert(file) { convertPDFtoDOCX(file); } function convertPDFtoDOCX(file) { alert('Converting PDF to DOCX...'); console.log('Converting PDF to DOCX...', file); }"
             },
             {
                 "name": "PDF to TXT",
                 "icon": "fas fa-file-alt",
-                "code": "function convert(file) { alert('Converting PDF to TXT...'); console.log('Converting PDF to TXT...', file); }"
+                "code": "function convert(file) { convertPDFtoTXT(file); } function convertPDFtoTXT(file) { alert('Converting PDF to TXT...'); console.log('Converting PDF to TXT...', file); }"
             }
         ]
     },
@@ -25,12 +25,12 @@
             {
                 "name": "PNG to JPG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { alert('Converting PNG to JPG...'); console.log('Converting PNG to JPG...', file); }"
+                "code": "function convert(file) { convertPNGtoJPG(file); } function convertPNGtoJPG(file) { alert('Converting PNG to JPG...'); console.log('Converting PNG to JPG...', file); }"
             },
             {
                 "name": "JPG to PNG",
                 "icon": "fas fa-image",
-                "code": "function convert(file) { alert('Converting JPG to PNG...'); console.log('Converting JPG to PNG...', file); }"
+                "code": "function convert(file) { convertJPGtoPNG(file); } function convertJPGtoPNG(file) { alert('Converting JPG to PNG...'); console.log('Converting JPG to PNG...', file); }"
             }
         ]
     },
@@ -40,12 +40,12 @@
             {
                 "name": "MP3 to WAV",
                 "icon": "fas fa-music",
-                "code": "function convert(file) { alert('Converting MP3 to WAV...'); console.log('Converting MP3 to WAV...', file); }"
+                "code": "function convert(file) { convertMP3toWAV(file); } function convertMP3toWAV(file) { alert('Converting MP3 to WAV...'); console.log('Converting MP3 to WAV...', file); }"
             },
             {
                 "name": "WAV to MP3",
                 "icon": "fas fa-music",
-                "code": "function convert(file) { alert('Converting WAV to MP3...'); console.log('Converting WAV to MP3...', file); }"
+                "code": "function convert(file) { convertWAVtoMP3(file); } function convertWAVtoMP3(file) { alert('Converting WAV to MP3...'); console.log('Converting WAV to MP3...', file); }"
             }
         ]
     }
