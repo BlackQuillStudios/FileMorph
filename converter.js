@@ -29,6 +29,14 @@ fetch('converters.json')
                     return;
                 }
                 const file = fileInput.files[0];
+
+                // Validate file type
+                const allowedTypes = converter.allowedTypes;
+                if (!allowedTypes.includes(file.type)) {
+                    output.textContent = 'Invalid file type. Please upload a valid file.';
+                    return;
+                }
+
                 output.textContent = 'Converting...';
                 convert(file);  // Call the dynamically loaded conversion function
                 output.textContent = 'Conversion complete. Check your downloads.';
