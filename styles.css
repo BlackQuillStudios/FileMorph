@@ -1,7 +1,5 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #ece9e6, #ffffff);
-    color: #333;
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,7 +7,14 @@ body {
     min-height: 100vh;
 }
 
-header {
+/* Index page styles */
+#index-page {
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    color: #333;
+    text-align: center;
+}
+
+#index-page header {
     background-color: #4CAF50;
     color: white;
     padding: 1.5rem;
@@ -17,7 +22,7 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
+#index-page header h1 {
     margin: 0;
     font-size: 2.5rem;
 }
@@ -30,6 +35,17 @@ main {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Converter page styles */
+.converter-page {
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex: 1;
 }
 
 .converter {
