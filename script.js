@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let players = [];
     let currentPlayerIndex = 0;
     let gameMode;
+    let gameOver = false;
 
     // Comprehensive bad words list for filtering (partial sample, please expand accordingly)
     const badWords = [
@@ -48,12 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         gameMode = mode;
         mainMenu.style.display = 'none';
         settingsContainer.style.display = 'block';
-        if (gameMode === 'multiplayer') {
-            multiplayerSettings.style.display = 'block';
-        }
+        multiplayerSettings.style.display = (gameMode === 'multiplayer') ? 'block' : 'none';
     }
 
     function startGame() {
+        gameOver = false;
         maxNumber = parseInt(maxNumberInput.value, 10);
         if (isNaN(maxNumber) || maxNumber <= 0) {
             displayErrorMessage('Please enter a valid maximum number.');
@@ -158,6 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     guessButton.addEventListener('click', function() {
+        if (gameOver) {
+            return;
+        }
         const userGuess = parseInt(guessInput.value, 10);
 
         if (isNaN(userGuess) || userGuess < 0 || userGuess > maxNumber) {
@@ -171,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (userGuess === secretNumber) {
                 const coinsEarned = calculateCoins(attempts);
                 outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+                gameOver = true;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
             } else {
@@ -188,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
+                gameOver = true;
             } else {
                 if (userGuess < secretNumber) {
                     outputMessage.textContent = `${players[currentPlayerIndex].name}, too low. ⬆️`;
