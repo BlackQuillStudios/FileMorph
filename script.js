@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (userGuess === secretNumber) {
                 outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts. 🎉`;
             } else if (userGuess < secretNumber) {
-                outputMessage.textContent = 'Too low. Try again. ⬇️';
+                outputMessage.textContent = 'Too low. Try again. ⬆️';
             } else {
-                outputMessage.textContent = 'Too high. Try again. ⬆️';
+                outputMessage.textContent = 'Too high. Try again. ⬇️';
             }
             updateScoreboard();
         } else if (gameMode === 'multiplayer') {
@@ -174,9 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } else {
                 if (userGuess < secretNumber) {
-                    outputMessage.textContent = `Too low, ${players[currentPlayerIndex].name}. Try again. ⬇️`;
+                    outputMessage.textContent = `Too low, ${players[currentPlayerIndex].name}. ⬆️`;
                 } else {
-                    outputMessage.textContent = `Too high, ${players[currentPlayerIndex].name}. Try again. ⬆️`;
+                    outputMessage.textContent = `Too high, ${players[currentPlayerIndex].name}. ⬇️`;
                 }
                 currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
                 outputMessage.textContent += ` It's now ${players[currentPlayerIndex].name}'s turn.`;
