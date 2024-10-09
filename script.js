@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Comprehensive bad words list for filtering (partial sample, please expand accordingly)
     const badWords = [
-        "badword1", "badword2", "badword3", "deez nuts", "william afton",
+        "badword1", "badword2", "badword3",
         "fuck", "shit", "bitch", "asshole", "dick", "bastard", "cunt", "nigger",
         "motherfucker", "slut", "whore"
     ];
