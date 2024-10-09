@@ -1,14 +1,4 @@
-$1
-    const hiddenInput = document.createElement('input');
-    hiddenInput.type = 'text';
-    hiddenInput.id = 'hidden-fnaf-input';
-    hiddenInput.style.position = 'fixed';
-    hiddenInput.style.bottom = '10px';
-    hiddenInput.style.right = '10px';
-    hiddenInput.style.border = '1px solid black';
-    $1
-    document.body.appendChild(hiddenInput);
-
+document.addEventListener('DOMContentLoaded', function() {
     const mainMenu = document.getElementById('main-menu');
     const settingsContainer = document.getElementById('settings-container');
     const gameContainer = document.getElementById('game-container');
@@ -22,6 +12,10 @@ $1
     const multiplayerSettings = document.getElementById('multiplayer-settings');
     const playerNamesContainer = document.getElementById('player-names');
     const startGameButton = document.getElementById('start-game-button');
+    const singlePlayerButton = document.getElementById('single-player-button');
+    const multiplayerButton = document.getElementById('multiplayer-button');
+    const mainMenuButton = document.getElementById('main-menu-button');
+
     let secretNumber;
     let maxNumber;
     let attempts;
@@ -37,41 +31,44 @@ $1
         "motherfucker", "slut", "whore"
     ];
 
+    // Create and add the hidden input field for FNAF trigger
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'text';
+    hiddenInput.id = 'hidden-fnaf-input';
+    hiddenInput.style.position = 'fixed';
+    hiddenInput.style.bottom = '10px';
+    hiddenInput.style.right = '10px';
+    hiddenInput.style.border = '1px solid black';
+    hiddenInput.style.opacity = '0.5';
+    document.body.appendChild(hiddenInput);
+
+    hiddenInput.addEventListener('input', function() {
+        if (hiddenInput.value.toLowerCase() === 'fnaf') {
+            document.body.innerHTML = '';
+            document.body.style.backgroundColor = 'black';
+            const asciiArt = document.createElement('pre');
+            asciiArt.style.color = 'lime';
+            asciiArt.style.fontSize = '20px';
+            asciiArt.style.textAlign = 'center';
+            asciiArt.style.marginTop = '20%';
+            asciiArt.textContent = `
+                ███████╗███╗   ██╗ █████╗ ███████╗
+                ██╔════╝████╗  ██║██╔══██╗██╔════╝
+                █████╗  ██╔██╗ ██║███████║███████╗
+                ██╔══╝  ██║╚██╗██║██╔══██║╚════██║
+                ███████╗██║ ╚████║██║  ██║███████║
+                ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+            `;
+            document.body.appendChild(asciiArt);
+        }
+    });
+
     function clearOutput() {
         outputMessage.textContent = '';
         guessInput.value = '';
     }
 
     function showMainMenu() {
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'text';
-        hiddenInput.id = 'hidden-fnaf-input';
-        hiddenInput.style.position = 'fixed';
-        hiddenInput.style.bottom = '10px';
-        hiddenInput.style.right = '10px';
-        hiddenInput.style.border = '1px solid black';
-        document.body.appendChild(hiddenInput);
-
-        hiddenInput.addEventListener('input', function() {
-            if (hiddenInput.value.toLowerCase() === 'fnaf') {
-                document.body.innerHTML = '';
-                document.body.style.backgroundColor = 'black';
-                const asciiArt = document.createElement('pre');
-                asciiArt.style.color = 'lime';
-                asciiArt.style.fontSize = '20px';
-                asciiArt.style.textAlign = 'center';
-                asciiArt.style.marginTop = '20%';
-                asciiArt.textContent = `
-                    ███████╗███╗   ██╗ █████╗ ███████╗
-                    ██╔════╝████╗  ██║██╔══██╗██╔════╝
-                    █████╗  ██╔██╗ ██║███████║███████╗
-                    ██╔══╝  ██║╚██╗██║██╔══██║╚════██║
-                    ███████╗██║ ╚████║██║  ██║███████║
-                    ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
-                `;
-                document.body.appendChild(asciiArt);
-            }
-        });
         mainMenu.style.display = 'block';
         settingsContainer.style.display = 'none';
         gameContainer.style.display = 'none';
@@ -94,7 +91,6 @@ $1
     }
 
     function startGame() {
-        gameOver = false;
         gameOver = false;
         maxNumber = parseInt(maxNumberInput.value, 10);
         if (isNaN(maxNumber) || maxNumber <= 0) {
@@ -212,8 +208,10 @@ $1
 
         attempts++;
 
-        $2 {
-            $1
+        if (gameMode === 'singleplayer') {
+            if (userGuess === secretNumber) {
+                const coinsEarned = calculateCoins(attempts);
+                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
                 gameOver = true;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
@@ -224,12 +222,15 @@ $1
         } else if (gameMode === 'multiplayer') {
             players[currentPlayerIndex].attempts++;
 
-            $1
-                gameOver = true;
-$2
+            if (userGuess === secretNumber) {
+                const coinsEarned = calculateCoins(players[currentPlayerIndex].attempts);
+                players[currentPlayerIndex].coins += coinsEarned;
+
+                outputMessage.textContent = `${players[currentPlayerIndex].name} guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
+                gameOver = true;
             } else {
                 if (userGuess < secretNumber) {
                     outputMessage.textContent = `${players[currentPlayerIndex].name}, too low. ⬆️`;
@@ -246,62 +247,11 @@ $2
         guessInput.value = '';
     });
 
-    document.getElementById('single-player-button').addEventListener('click', () => showSettings('singleplayer'));
-    document.getElementById('multiplayer-button').addEventListener('click', () => showSettings('multiplayer'));
+    singlePlayerButton.addEventListener('click', () => showSettings('singleplayer'));
+    multiplayerButton.addEventListener('click', () => showSettings('multiplayer'));
     startGameButton.addEventListener('click', startGame);
     numPlayersInput.addEventListener('input', createPlayerInputs);
-    $1
-
-    hiddenInput.addEventListener('input', function() {
-        if (hiddenInput.value.toLowerCase() === 'fnaf') {
-            document.body.innerHTML = '';
-            document.body.style.backgroundColor = 'black';
-            const asciiArt = document.createElement('pre');
-            asciiArt.style.color = 'lime';
-            asciiArt.style.fontSize = '20px';
-            asciiArt.style.textAlign = 'center';
-            asciiArt.style.marginTop = '20%';
-            asciiArt.textContent = `
-              ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣲⡿⣡⣾⣿⣶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣴⣿⡿⣿⣿⣿⡿⣯⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⢀⣀⣀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⣰⣿⡿⣿⣿⣿⣿⣷⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠚⢹⣿⣞⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀⠀⠀⣸⣀⣿⣿⣿⣿⣿⣿⣿⡿⠿⠟⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠠⢿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣦⣀⣀⣀⣀⣄⢠⣾⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⠿⠛⣫⣾⣿⣿⣋⣭⣟⣿⣯⣟⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⢿⠣⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣷⢖⣿⢛⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠤⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣯⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣾⡟⣯⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣻⣿⡯⢑⣿⠟⢉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡿⣷⣾⣾⡗⢩⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢰⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡼⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⣠⣶⣿⣿⣿⣄⣠⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣛⣿⣶⣦⣼⣿⣿⣿⣿⣿⣿⠿⠟⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠻⣿⣭⣿⣶⡠⢔⣶⣶⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣻⣟⣷⣤⣦⣤⣴⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢾⣿⣷⢮⣿⣿⠿⠅⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢠⡀⠀⠀⠈⣉⣿⣿⢯⠭⡗⢐⣿⣿⣗⣺⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⠔⣿⣟⣷⣾⣿⣿⣷⣿⣧⢄⣼⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀
-⠀⠀⠀⠀⠀⢀⠟⣾⣿⣿⣿⣿⣿⡿⣿⣿⣿⢿⣻⢤⣿⣿⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀
-⠀⠀⠀⠀⠀⢾⣁⣝⡟⣿⣿⣿⣿⣿⣿⣿⣶⣾⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀
-⠀⠀⠀⣀⣰⣾⣯⣷⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠏⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀
-⠤⠤⠜⠁⢾⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⢿⣹⣿⣯⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢀⣀⡀⠈⡟⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄
-⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢾⣯⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇
-⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠘⣯⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠘⠉⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿
-⠀⠀⠀⡰⣉⣴⢜⣿⣿⣿⣿⣿⠁⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣷
-⠀⠀⢰⣿⣏⡹⢶⣿⣿⣿⣿⣿⠄⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⠇
-⠀⠀⣼⣯⣷⣴⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⣿⡆⠀⠀⠀⠀⠀⣘⣿⣿⣿⣿⣿⣿⣿⠆
-⠀⠀⣿⣿⣿⣻⣿⣿⣿⣿⡛⡟⠀⠀⠀⠀⠀⠀⠈⣩⣿⣿⣿⣿⣿⣿⣿⣟⣿⣯⣿⣿⣿⣿⣦⣤⣄⣨⣿⣤⣼⣧⣴⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣷⡈⠁
-⠀⠀⣼⡻⡟⣾⣿⣿⣿⣿⣷⡇⠀⠀⠀⠀⠀⠀⢸⣿⣿⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣷⠀
-            `;
-            document.body.appendChild(asciiArt);
-        }
-    });
+    mainMenuButton.addEventListener('click', showMainMenu);
 
     // Show scoreboard from the beginning
     updateScoreboard();
