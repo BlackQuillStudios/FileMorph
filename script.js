@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (gameMode === 'multiplayer') {
             players.forEach((player, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `${player.name}: Attempts - ${player.attempts}, Coins - ${player.coins}, Best Score - ${player.bestScore === Infinity ? 'N/A' : player.bestScore}`;
+                listItem.textContent = `${player.name} | Coins: ${player.coins} | Attempts: ${player.attempts}`;
                 if (index === currentPlayerIndex) {
                     listItem.classList.add('active');
                 }
@@ -184,15 +184,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const coinsEarned = calculateCoins(players[currentPlayerIndex].attempts);
                 players[currentPlayerIndex].coins += coinsEarned;
 
-                outputMessage.textContent = `Congratulations, ${players[currentPlayerIndex].name}! You guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+                outputMessage.textContent = `${players[currentPlayerIndex].name} guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
             } else {
                 if (userGuess < secretNumber) {
-                    outputMessage.textContent = `Too low, ${players[currentPlayerIndex].name}. ⬆️`;
+                    outputMessage.textContent = `${players[currentPlayerIndex].name}, too low. ⬆️`;
                 } else {
-                    outputMessage.textContent = `Too high, ${players[currentPlayerIndex].name}. ⬇️`;
+                    outputMessage.textContent = `${players[currentPlayerIndex].name}, too high. ⬇️`;
                 }
                 currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
                 outputMessage.textContent += ` It's now ${players[currentPlayerIndex].name}'s turn.`;
