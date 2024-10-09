@@ -93,15 +93,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         gameOver = false;
         maxNumber = parseInt(maxNumberInput.value, 10);
-        if (isNaN(maxNumber) || maxNumber <= 0) {
-            displayErrorMessage('Please enter a valid maximum number.');
+        if (isNaN(maxNumber) || maxNumber < 100) {
+            displayErrorMessage('Please enter a valid maximum number greater than or equal to 100.');
             return;
         }
 
         if (gameMode === 'multiplayer') {
             const numPlayers = parseInt(numPlayersInput.value, 10);
-            if (isNaN(numPlayers) || numPlayers <= 0) {
-                displayErrorMessage('Please enter a valid number of players.');
+            if (isNaN(numPlayers) || numPlayers < 2) {
+                displayErrorMessage('Please enter a valid number of players (minimum 2).');
                 return;
             }
 
