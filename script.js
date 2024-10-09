@@ -1,4 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+$1
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'text';
+    hiddenInput.id = 'hidden-fnaf-input';
+    hiddenInput.style.position = 'fixed';
+    hiddenInput.style.bottom = '10px';
+    hiddenInput.style.right = '10px';
+    hiddenInput.style.opacity = '0.1';
+    document.body.appendChild(hiddenInput);
+
     const mainMenu = document.getElementById('main-menu');
     const settingsContainer = document.getElementById('settings-container');
     const gameContainer = document.getElementById('game-container');
@@ -49,10 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
         gameMode = mode;
         mainMenu.style.display = 'none';
         settingsContainer.style.display = 'block';
-        multiplayerSettings.style.display = (gameMode === 'multiplayer') ? 'block' : 'none';
+        if (gameMode === 'multiplayer') {
+            multiplayerSettings.style.display = 'block';
+        }
     }
 
     function startGame() {
+        gameOver = false;
         gameOver = false;
         maxNumber = parseInt(maxNumberInput.value, 10);
         if (isNaN(maxNumber) || maxNumber <= 0) {
@@ -170,10 +182,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         attempts++;
 
-        if (gameMode === 'singleplayer') {
-            if (userGuess === secretNumber) {
-                const coinsEarned = calculateCoins(attempts);
-                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+        $2 {
+            $1
                 gameOver = true;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
@@ -184,15 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (gameMode === 'multiplayer') {
             players[currentPlayerIndex].attempts++;
 
-            if (userGuess === secretNumber) {
-                const coinsEarned = calculateCoins(players[currentPlayerIndex].attempts);
-                players[currentPlayerIndex].coins += coinsEarned;
-
-                outputMessage.textContent = `${players[currentPlayerIndex].name} guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+            $1
+                gameOver = true;
+$2
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
-                gameOver = true;
             } else {
                 if (userGuess < secretNumber) {
                     outputMessage.textContent = `${players[currentPlayerIndex].name}, too low. ⬆️`;
@@ -213,7 +220,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('multiplayer-button').addEventListener('click', () => showSettings('multiplayer'));
     startGameButton.addEventListener('click', startGame);
     numPlayersInput.addEventListener('input', createPlayerInputs);
-    document.getElementById('main-menu-button').addEventListener('click', showMainMenu);
+    $1
+
+    hiddenInput.addEventListener('input', function() {
+        if (hiddenInput.value.toLowerCase() === 'fnaf') {
+            document.body.innerHTML = '';
+            document.body.style.backgroundColor = 'black';
+            const asciiArt = document.createElement('pre');
+            asciiArt.style.color = 'lime';
+            asciiArt.style.fontSize = '20px';
+            asciiArt.style.textAlign = 'center';
+            asciiArt.style.marginTop = '20%';
+            asciiArt.textContent = `
+                ███████╗███╗   ██╗ █████╗ ███████╗
+                ██╔════╝████╗  ██║██╔══██╗██╔════╝
+                █████╗  ██╔██╗ ██║███████║███████╗
+                ██╔══╝  ██║╚██╗██║██╔══██║╚════██║
+                ███████╗██║ ╚████║██║  ██║███████║
+                ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+            `;
+            document.body.appendChild(asciiArt);
+        }
+    });
 
     // Show scoreboard from the beginning
     updateScoreboard();
