@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let players = [];
     let currentPlayerIndex = 0;
     let gameMode;
+    let gameOver = false;
 
     // Comprehensive bad words list for filtering (partial sample, please expand accordingly)
     const badWords = [
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startGame() {
+        gameOver = false;
         maxNumber = parseInt(maxNumberInput.value, 10);
         if (isNaN(maxNumber) || maxNumber <= 0) {
             displayErrorMessage('Please enter a valid maximum number.');
@@ -158,19 +160,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     guessButton.addEventListener('click', function() {
-        const userGuess = parseInt(guessInput.value, 10);
-
-        if (isNaN(userGuess) || userGuess < 0 || userGuess > maxNumber) {
-            outputMessage.textContent = `Please enter a number between 0 and ${maxNumber}.`;
+        if (gameOver) {
             return;
         }
-
-        attempts++;
+        $1attempts++;
 
         if (gameMode === 'singleplayer') {
-            if (userGuess === secretNumber) {
-                const coinsEarned = calculateCoins(attempts);
-                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+            $1
+                gameOver = true;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
             } else {
