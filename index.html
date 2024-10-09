@@ -3,47 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Number Game</title>
+    <title>Guess The Number Game</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="content-wrapper">
-            <div id="main-menu" class="menu-box">
-                <h1>Guess the Number Game</h1>
-                <p class="game-intro">A fun game for everyone! Try to guess the secret number in as few attempts as possible.</p>
-                <button id="single-player-button" class="menu-button">Single Player</button>
-                <button id="multiplayer-button" class="menu-button">Multiplayer</button>
-            </div>
-
-            <div id="settings-container" class="settings-box" style="display:none;">
-                <h2>Game Settings</h2>
-                <label for="max-number-input">Enter Maximum Number:</label>
-                <input type="number" id="max-number-input" placeholder="e.g. 100">
-                <div id="multiplayer-settings" style="display:none;">
-                    <label for="num-players-input">Enter Number of Players:</label>
-                    <input type="number" id="num-players-input" placeholder="e.g. 2">
-                    <div id="player-names"></div>
-                </div>
-                <p id="error-message" class="error-message"></p>
-                <button id="start-game-button" class="menu-button">Start Game</button>
-            </div>
-
-            <div id="game-container" class="game-box" style="display:none;">
-                <h2>Guess the Number</h2>
-                <p id="output" class="output-message"></p>
-                <input type="number" id="guess-input" class="guess-input" placeholder="Enter your guess here">
-                <button id="guess-button" class="guess-button">Submit Guess</button>
-                <button id="main-menu-button" class="back-button">Main Menu</button>
-            </div>
-        </div>
-
-        <div id="scoreboard" class="scoreboard">
-            <h3>Scoreboard</h3>
-            <ul id="score-list"></ul>
-        </div>
+    <div id="main-menu">
+        <h1>Guess The Number Game</h1>
+        <button id="single-player-button">Single Player</button>
+        <button id="multiplayer-button">Multiplayer</button>
     </div>
+
+    <div id="settings-container" style="display: none;">
+        <h2>Game Settings</h2>
+        <label for="max-number-input">Maximum Number:</label>
+        <input type="number" id="max-number-input" min="100" placeholder="Enter maximum number">
+        <div id="multiplayer-settings" style="display: none;">
+            <label for="num-players-input">Number of Players:</label>
+            <input type="number" id="num-players-input" min="2" placeholder="Enter number of players">
+            <div id="player-names"></div>
+        </div>
+        <button id="start-game-button">Start Game</button>
+    </div>
+
+    <div id="game-container" style="display: none;">
+        <h2>Guess The Number</h2>
+        <p id="output"></p>
+        <input type="number" id="guess-input" placeholder="Enter your guess">
+        <button id="guess-button">Submit Guess</button>
+        <button id="main-menu-button">Main Menu</button>
+    </div>
+
+    <div id="scoreboard">
+        <h2>Scoreboard</h2>
+        <ul id="score-list"></ul>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
