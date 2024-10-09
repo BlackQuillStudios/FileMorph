@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createPlayerInputs() {
         const numPlayers = parseInt(numPlayersInput.value, 10);
         playerNamesContainer.innerHTML = '';
-        if (!isNaN(numPlayers) && numPlayers > 1) {
+        if (!isNaN(numPlayers) && numPlayers >= 2) {
             for (let i = 0; i < numPlayers; i++) {
                 const input = document.createElement('input');
                 input.type = 'text';
