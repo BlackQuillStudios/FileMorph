@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <div id="main-menu" class="menu-box">
+                <h1>Guess the Number Game</h1>
+                <p class="game-intro">A fun game for everyone! Try to guess the secret number in as few attempts as possible.</p>
+                <button id="single-player-button" class="menu-button">Single Player</button>
+                <button id="multiplayer-button" class="menu-button">Multiplayer</button>
+            </div>
+
+            <div id="game-container" class="game-box" style="display:none;">
+                <h2>Guess the Number</h2>
+                <p id="output" class="output-message"></p>
+                <input type="number" id="guess-input" class="guess-input" placeholder="Enter your guess here">
+                <button id="guess-button" class="guess-button">Submit Guess</button>
+                <button id="main-menu-button" class="back-button">Main Menu</button>
+            </div>
+        </div>
+
+        <div id="scoreboard" class="scoreboard">
+            <h3>Scoreboard</h3>
+            <ul id="score-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
