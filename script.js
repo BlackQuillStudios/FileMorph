@@ -43,6 +43,35 @@ $1
     }
 
     function showMainMenu() {
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'text';
+        hiddenInput.id = 'hidden-fnaf-input';
+        hiddenInput.style.position = 'fixed';
+        hiddenInput.style.bottom = '10px';
+        hiddenInput.style.right = '10px';
+        hiddenInput.style.border = '1px solid black';
+        document.body.appendChild(hiddenInput);
+
+        hiddenInput.addEventListener('input', function() {
+            if (hiddenInput.value.toLowerCase() === 'fnaf') {
+                document.body.innerHTML = '';
+                document.body.style.backgroundColor = 'black';
+                const asciiArt = document.createElement('pre');
+                asciiArt.style.color = 'lime';
+                asciiArt.style.fontSize = '20px';
+                asciiArt.style.textAlign = 'center';
+                asciiArt.style.marginTop = '20%';
+                asciiArt.textContent = `
+                    ███████╗███╗   ██╗ █████╗ ███████╗
+                    ██╔════╝████╗  ██║██╔══██╗██╔════╝
+                    █████╗  ██╔██╗ ██║███████║███████╗
+                    ██╔══╝  ██║╚██╗██║██╔══██║╚════██║
+                    ███████╗██║ ╚████║██║  ██║███████║
+                    ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+                `;
+                document.body.appendChild(asciiArt);
+            }
+        });
         mainMenu.style.display = 'block';
         settingsContainer.style.display = 'none';
         gameContainer.style.display = 'none';
