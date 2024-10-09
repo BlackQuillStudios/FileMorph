@@ -23,49 +23,39 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPlayerIndex = 0;
     let gameMode;
     let gameOver = false;
+    let log = [];
 
-    // Comprehensive bad words list for filtering (partial sample, please expand accordingly)
     const badWords = [
         "badword1", "badword2", "badword3",
         "fuck", "shit", "bitch", "asshole", "dick", "bastard", "cunt", "nigger",
         "motherfucker", "slut", "whore"
     ];
 
-    // Create and add the hidden input field for FNAF trigger
-    const hiddenInput = document.createElement('input');
-    hiddenInput.type = 'text';
-    hiddenInput.id = 'hidden-fnaf-input';
-    hiddenInput.style.position = 'fixed';
-    hiddenInput.style.bottom = '10px';
-    hiddenInput.style.right = '10px';
-    hiddenInput.style.border = '1px solid black';
-    hiddenInput.style.opacity = '0.5';
-    document.body.appendChild(hiddenInput);
-
-    hiddenInput.addEventListener('input', function() {
-        if (hiddenInput.value.toLowerCase() === 'fnaf') {
-            document.body.innerHTML = '';
-            document.body.style.backgroundColor = 'black';
-            const asciiArt = document.createElement('pre');
-            asciiArt.style.color = 'lime';
-            asciiArt.style.fontSize = '20px';
-            asciiArt.style.textAlign = 'center';
-            asciiArt.style.marginTop = '20%';
-            asciiArt.textContent = `
-                ███████╗███╗   ██╗ █████╗ ███████╗
-                ██╔════╝████╗  ██║██╔══██╗██╔════╝
-                █████╗  ██╔██╗ ██║███████║███████╗
-                ██╔══╝  ██║╚██╗██║██╔══██║╚════██║
-                ███████╗██║ ╚████║██║  ██║███████║
-                ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
-            `;
-            document.body.appendChild(asciiArt);
-        }
-    });
-
     function clearOutput() {
         outputMessage.textContent = '';
         guessInput.value = '';
+    }
+
+    function logMove(player, guess) {
+        log.push(`${player} guessed ${guess}`);
+        updateLog();
+    }
+
+    function updateLog() {
+        const logContainer = document.getElementById('log');
+        if (!logContainer) {
+            const newLogContainer = document.createElement('div');
+            newLogContainer.id = 'log';
+            newLogContainer.style.position = 'fixed';
+            newLogContainer.style.bottom = '10px';
+            newLogContainer.style.left = '10px';
+            newLogContainer.style.backgroundColor = '#fff';
+            newLogContainer.style.padding = '10px';
+            newLogContainer.style.maxHeight = '200px';
+            newLogContainer.style.overflowY = 'auto';
+            document.body.appendChild(newLogContainer);
+        }
+        document.getElementById('log').innerHTML = log.join('<br>');
     }
 
     function showMainMenu() {
@@ -110,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
             playerNamesContainer.querySelectorAll('input').forEach((input, i) => {
                 let playerName = input.value.trim().toLowerCase();
 
-                // Bad word filter and specific name check
                 if (badWords.some(badWord => playerName.includes(badWord))) {
                     displayErrorMessage(`The name "${input.value}" is not allowed. Please enter a different name.`);
                     validNames = false;
@@ -172,29 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function displayErrorMessage(message) {
-        let errorMessage = document.getElementById('error-message');
-        if (!errorMessage) {
-            errorMessage = document.createElement('p');
-            errorMessage.id = 'error-message';
-            errorMessage.style.color = 'red';
-            settingsContainer.appendChild(errorMessage);
-        }
-        errorMessage.textContent = message;
-    }
-
-    function calculateCoins(attempts) {
-        let baseCoins = 100;
-        let bonusCoins = 0;
-
-        if (attempts === 1) {
-            bonusCoins = 50; // Bonus for winning on the first try
-        }
-
-        let coinsEarned = baseCoins - (attempts * 5) + bonusCoins;
-        return coinsEarned > 0 ? coinsEarned : 0; // Ensure coins are not negative
-    }
-
     guessButton.addEventListener('click', function() {
         if (gameOver) {
             return;
@@ -208,10 +174,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         attempts++;
 
+        const playerName = gameMode === 'singleplayer' ? 'Player' : players[currentPlayerIndex].name;
+        logMove(playerName, userGuess);
+
         if (gameMode === 'singleplayer') {
             if (userGuess === secretNumber) {
-                const coinsEarned = calculateCoins(attempts);
-                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts. 🎉`;
                 gameOver = true;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
@@ -223,10 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
             players[currentPlayerIndex].attempts++;
 
             if (userGuess === secretNumber) {
-                const coinsEarned = calculateCoins(players[currentPlayerIndex].attempts);
-                players[currentPlayerIndex].coins += coinsEarned;
-
-                outputMessage.textContent = `${players[currentPlayerIndex].name} guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
+                outputMessage.textContent = `${players[currentPlayerIndex].name} guessed the number in ${players[currentPlayerIndex].attempts} attempts. 🎉`;
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
@@ -243,7 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updateScoreboard();
         }
 
-        // Clear the input field after each guess
         guessInput.value = '';
     });
 
@@ -252,7 +216,4 @@ document.addEventListener('DOMContentLoaded', function() {
     startGameButton.addEventListener('click', startGame);
     numPlayersInput.addEventListener('input', createPlayerInputs);
     mainMenuButton.addEventListener('click', showMainMenu);
-
-    // Show scoreboard from the beginning
-    updateScoreboard();
 });
