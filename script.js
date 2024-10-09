@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     playerName = "Joel";
                 }
 
-                players.push({ name: playerName.charAt(0).toUpperCase() + playerName.slice(1), attempts: 0, bestScore: Infinity });
+                players.push({ name: playerName.charAt(0).toUpperCase() + playerName.slice(1), attempts: 0, bestScore: Infinity, coins: 0 });
             });
 
             if (!validNames) {
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (gameMode === 'multiplayer') {
             players.forEach((player, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `${player.name}: Attempts - ${player.attempts}, Best Score - ${player.bestScore === Infinity ? 'N/A' : player.bestScore}`;
+                listItem.textContent = `${player.name}: Attempts - ${player.attempts}, Coins - ${player.coins}, Best Score - ${player.bestScore === Infinity ? 'N/A' : player.bestScore}`;
                 if (index === currentPlayerIndex) {
                     listItem.classList.add('active');
                 }
@@ -145,6 +145,18 @@ document.addEventListener('DOMContentLoaded', function() {
         errorMessage.textContent = message;
     }
 
+    function calculateCoins(attempts) {
+        let baseCoins = 100;
+        let bonusCoins = 0;
+
+        if (attempts === 1) {
+            bonusCoins = 50; // Bonus for winning on the first try
+        }
+
+        let coinsEarned = baseCoins - (attempts * 5) + bonusCoins;
+        return coinsEarned > 0 ? coinsEarned : 0; // Ensure coins are not negative
+    }
+
     guessButton.addEventListener('click', function() {
         const userGuess = parseInt(guessInput.value, 10);
 
@@ -157,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (gameMode === 'singleplayer') {
             if (userGuess === secretNumber) {
-                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts. 🎉`;
+                const coinsEarned = calculateCoins(attempts);
+                outputMessage.textContent = `Congratulations! You guessed the number in ${attempts} attempts and earned ${coinsEarned} coins. 🎉`;
             } else if (userGuess < secretNumber) {
                 outputMessage.textContent = 'Too low. Try again. ⬆️';
             } else {
@@ -168,7 +181,10 @@ document.addEventListener('DOMContentLoaded', function() {
             players[currentPlayerIndex].attempts++;
 
             if (userGuess === secretNumber) {
-                outputMessage.textContent = `Congratulations, ${players[currentPlayerIndex].name}! You guessed the number in ${players[currentPlayerIndex].attempts} attempts. 🎉`;
+                const coinsEarned = calculateCoins(players[currentPlayerIndex].attempts);
+                players[currentPlayerIndex].coins += coinsEarned;
+
+                outputMessage.textContent = `Congratulations, ${players[currentPlayerIndex].name}! You guessed the number in ${players[currentPlayerIndex].attempts} attempts and earned ${coinsEarned} coins. 🎉`;
                 if (players[currentPlayerIndex].attempts < players[currentPlayerIndex].bestScore) {
                     players[currentPlayerIndex].bestScore = players[currentPlayerIndex].attempts;
                 }
